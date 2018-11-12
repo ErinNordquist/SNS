@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, Button, FlatList} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, Button, FlatList, WebView} from 'react-native';
 import MapView from 'react-native-maps';
 //39.290386
 //-76.612190
@@ -62,7 +62,19 @@ export default class App extends Component<Props> {
       });
   }
 
+  login = (user, pass) => {
+    return fetch('localhost:8000/login',{
+        method: 'POST',
+        body: JSON.stringify({
+          username: user,
+          password: pass,
+          })
+    });
+  }
 
+  displayMessage => (longitude, latitude) => {
+    return "";
+  }
 
      updateRegion = (region) => {
         if(region.longitude == null){
@@ -82,7 +94,7 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
 
 
-        <MapView style={styles.map}
+       <MapView style={styles.map}
             region = {{
               latitude: parseFloat(this.state.lat),
               longitude: parseFloat(this.state.long),
@@ -116,8 +128,14 @@ export default class App extends Component<Props> {
         />
 
 
+
     </View>
 
+
+ /* <WebView
+                source={{uri: 'https://github.com/facebook/react-native'}}
+                style={{marginTop: 20}}
+              />*/
     );
   }
 
