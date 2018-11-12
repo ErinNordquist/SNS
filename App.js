@@ -10,6 +10,8 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, Button, FlatList, WebView} from 'react-native';
 import MapView from 'react-native-maps';
 import Map from './components/Map.js';
+import Login from './components/Login.js';
+
 //39.290386
 //-76.612190
 type Props = {};
@@ -20,8 +22,8 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-
-    <Map hide={false}/>
+      //<Map hide={true}/>
+      <Login />
     );
   }
 }

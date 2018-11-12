@@ -95,8 +95,6 @@ export default class Map extends Component<Props> {
     }
     return (
       <View style={styles.container}>
-
-
        <MapView style={styles.map}
             region = {{
               latitude: parseFloat(this.state.lat),
@@ -108,19 +106,17 @@ export default class Map extends Component<Props> {
 
             >
         </MapView>
+        <FlatList
+                            data={this.state.dataSource}
+                            renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
+                            keyExtractor={({id}, index) => id}
+                          />
         <TextInput
           style={styles.longitude}
           onChangeText = {(typedText) => this.updateLongitude(typedText)}
           placeholder={this.state.long.toString()}
           //value={this.state.long.toString()}
         />
-
-        <FlatList
-                            data={this.state.dataSource}
-                            renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
-                            keyExtractor={({id}, index) => id}
-                          />
-
         <TextInput
           style={styles.latitude}
           onChangeText = {(typedText) => this.updateLatitude(typedText)}
@@ -129,9 +125,6 @@ export default class Map extends Component<Props> {
           //value={this.state.lat.toString()}
 
         />
-
-
-
     </View>
     );
   }
