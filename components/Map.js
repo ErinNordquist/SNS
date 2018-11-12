@@ -90,6 +90,9 @@ export default class Map extends Component<Props> {
      }
 
   render() {
+    if(this.props.hide){
+      return (<Text> Componenet Hidden </Text>);
+    }
     return (
       <View style={styles.container}>
 
