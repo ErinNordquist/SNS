@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, Button, FlatList} from 'react-native';
 import MapView from 'react-native-maps';
 //39.290386
 //-76.612190
@@ -19,7 +19,7 @@ export default class App extends Component<Props> {
             lat: '33.653390',
             long: '-84.449500',
             userLong: '',
-            userLat: ''
+            userLat: '',
         };
      }
 
@@ -43,6 +43,25 @@ export default class App extends Component<Props> {
         //console.log("Latitude = " + this.state.lat + " Longitude = " + this.state.long);
      }
 
+   //Runs before component is rendered
+  componentDidMount(){
+    return fetch('https://facebook.github.io/react-native/movies.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.movies,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
 
 
      updateRegion = (region) => {
@@ -61,6 +80,8 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
+
+
         <MapView style={styles.map}
             region = {{
               latitude: parseFloat(this.state.lat),
@@ -78,6 +99,13 @@ export default class App extends Component<Props> {
           placeholder={this.state.long.toString()}
           //value={this.state.long.toString()}
         />
+
+        <FlatList
+                            data={this.state.dataSource}
+                            renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
+                            keyExtractor={({id}, index) => id}
+                          />
+
         <TextInput
           style={styles.latitude}
           onChangeText = {(typedText) => this.updateLatitude(typedText)}
@@ -86,7 +114,10 @@ export default class App extends Component<Props> {
           //value={this.state.lat.toString()}
 
         />
+
+
     </View>
+
     );
   }
 
